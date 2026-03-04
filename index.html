@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLVIVA Payment Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         :root {
@@ -24,50 +26,41 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: #f4f5f0;
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
         }
         .header {
-            background: linear-gradient(135deg, #0d2e12, #1e5326);
-            color: white;
-            padding: 1.25rem 2rem;
-            text-align: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            background: #d2ff1e;
+            padding: 0.85rem 2rem;
+            border-bottom: 3px solid #1e5326;
         }
         .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
-        .header-logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #d2ff1e;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-        .header-logo .sol-accent { color: #fffeff; }
-        .header-divider {
-            width: 2px;
-            height: 36px;
-            background: rgba(210,255,30,0.4);
-            border-radius: 1px;
+        .header-logo img {
+            height: 52px;
+            width: auto;
+            display: block;
         }
         .header-text h1 {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #fffeff;
+            color: #1e5326;
+            letter-spacing: 0.02em;
         }
         .header-text p {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-top: 0.15rem;
-            color: #fffeff;
+            font-size: 0.72rem;
+            color: #3a6b40;
+            margin-top: 1px;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
         .container {
             max-width: 1400px;
@@ -83,23 +76,21 @@
         .inputs-col, .results-col { display: flex; flex-direction: column; gap: 1rem; }
         .card {
             background: var(--card);
-            border-radius: 12px;
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.15rem 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid #e2e6e0;
         }
         .card-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1e5326;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.45rem;
+            border-bottom: 1px solid #e2e6e0;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
-        .card-title .icon { font-size: 1.2rem; }
         .form-row {
             display: flex;
             align-items: center;
@@ -108,9 +99,9 @@
             flex-wrap: wrap;
         }
         .form-row label {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 500;
-            color: var(--text);
+            color: #3a3a3a;
             min-width: 140px;
         }
         .form-row input[type="number"],
@@ -134,12 +125,14 @@
         /* Device table */
         .device-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         .device-table th {
-            background: var(--primary);
+            background: #1e5326;
             color: white;
-            padding: 0.4rem;
+            padding: 0.35rem 0.4rem;
             text-align: center;
-            font-weight: 600;
-            font-size: 0.75rem;
+            font-weight: 500;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
         .device-table td { padding: 0.3rem; border-bottom: 1px solid var(--border); }
         .device-table select, .device-table input {
@@ -186,7 +179,7 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        .switch input:checked + .slider { background: var(--primary); }
+        .switch input:checked + .slider { background: #1e5326; }
         .switch input:checked + .slider:before { transform: translateX(20px); }
         /* Results */
         .result-grid {
@@ -209,14 +202,15 @@
         .result-value.highlight { color: var(--accent-dark); font-size: 1rem; }
         .big-result {
             text-align: center;
-            padding: 1rem;
-            background: linear-gradient(135deg, #f0ffd6, #e4ffb0);
-            border-radius: 10px;
-            margin-bottom: 0.75rem;
+            padding: 0.9rem 1rem;
+            background: #d2ff1e;
+            border-radius: 6px;
+            margin-bottom: 0.6rem;
+            border-left: 4px solid #1e5326;
         }
-        .big-result .label { font-size: 0.85rem; color: var(--primary-dark); font-weight: 500; }
-        .big-result .value { font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); }
-        .big-result .sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .big-result .label { font-size: 0.78rem; color: #1e5326; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+        .big-result .value { font-size: 1.6rem; font-weight: 700; color: #1e5326; margin-top: 2px; }
+        .big-result .sub { font-size: 0.76rem; color: #3a6b40; margin-top: 0.2rem; }
         .pricing-breakdown { font-size: 0.85rem; }
         .pricing-row {
             display: flex;
@@ -225,12 +219,13 @@
             border-bottom: 1px solid #f5f5f5;
         }
         .pricing-row.total {
-            border-top: 2px solid var(--primary);
+            border-top: 1px solid #1e5326;
             border-bottom: none;
             font-weight: 700;
-            color: var(--primary-dark);
+            color: #1e5326;
             padding-top: 0.5rem;
             margin-top: 0.25rem;
+            font-size: 0.9rem;
         }
         .pricing-row.discount { color: var(--success); }
         .hint {
@@ -250,24 +245,24 @@
         }
         .chart-container { position: relative; height: 280px; margin-top: 0.5rem; }
         .disclaimer {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            line-height: 1.4;
+            font-size: 0.68rem;
+            color: #888;
+            line-height: 1.45;
             margin-top: 0.75rem;
-            padding: 0.5rem;
-            background: #fafafa;
-            border-radius: 6px;
+            padding: 0.5rem 0;
+            border-top: 1px solid #eee;
         }
         .footer {
             text-align: center;
-            padding: 1rem;
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            padding: 1.25rem 1rem;
+            font-size: 0.7rem;
+            color: #999;
+            letter-spacing: 0.02em;
         }
         .consumption-bar {
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 10px;
+            height: 16px;
+            background: #e8e8e4;
+            border-radius: 3px;
             overflow: hidden;
             margin: 0.5rem 0;
             display: flex;
@@ -306,8 +301,7 @@
 
 <div class="header">
     <div class="header-inner">
-        <div class="header-logo">SOL<span class="sol-accent">VIVA</span></div>
-        <div class="header-divider"></div>
+        <div class="header-logo"><img src="solvivalogo.png" alt="Solviva"></div>
         <div class="header-text">
             <h1>Payment Calculator</h1>
             <p>Solar Energy Investment — Philippines</p>
@@ -321,7 +315,7 @@
 
         <!-- Electric Bill -->
         <div class="card">
-            <div class="card-title"><span class="icon">⚡</span> Electric Bill & Rate</div>
+            <div class="card-title">Electric Bill & Rate</div>
             <div class="form-row">
                 <label>Utility Rate per kWh:</label>
                 <span class="unit">₱</span>
@@ -340,7 +334,7 @@
 
         <!-- Device Selector -->
         <div class="card">
-            <div class="card-title"><span class="icon">🔌</span> Major Device Selector (up to 7)</div>
+            <div class="card-title">Major Device Selector (up to 7)</div>
             <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;">
                 Select devices that affect your DAY vs. NIGHT usage distribution.
             </p>
@@ -366,32 +360,32 @@
 
         <!-- Solar Package -->
         <div class="card">
-            <div class="card-title"><span class="icon">☀️</span> Solar Package</div>
+            <div class="card-title">Solar Package</div>
             <div class="form-row">
                 <label>Solar Package (kWp):</label>
                 <select id="solarPackage" onchange="recalculate()">
                     <option value="0">None</option>
-                    <option value="5.16">5.16 kWp</option>
-                    <option value="6.41">6.41 kWp</option>
-                    <option value="8.39">8.39 kWp</option>
-                    <option value="10.32">10.32 kWp</option>
-                    <option value="12.26" selected>12.26 kWp</option>
-                    <option value="15.48">15.48 kWp</option>
-                    <option value="20">20 kWp</option>
+                    <option value="5.16">5.16 kWp — ₱233,000</option>
+                    <option value="6.41">6.41 kWp — ₱289,000</option>
+                    <option value="8.39">8.39 kWp — ₱378,000</option>
+                    <option value="10.32">10.32 kWp — ₱418,000</option>
+                    <option value="12.26" selected>12.26 kWp — ₱497,000</option>
+                    <option value="15.48">15.48 kWp — ₱593,000</option>
+                    <option value="20">20 kWp — ₱765,000</option>
                 </select>
             </div>
             <div class="form-row">
                 <label>Battery (kWh):</label>
                 <select id="batteryKwh" onchange="recalculate()">
                     <option value="0">None</option>
-                    <option value="5">5 kWh (1 battery)</option>
-                    <option value="10" selected>10 kWh (2 batteries)</option>
-                    <option value="15">15 kWh (3 batteries)</option>
-                    <option value="20">20 kWh (4 batteries)</option>
-                    <option value="25">25 kWh (5 batteries)</option>
-                    <option value="30">30 kWh (6 batteries)</option>
-                    <option value="35">35 kWh (7 batteries)</option>
-                    <option value="40">40 kWh (8 batteries)</option>
+                    <option value="5">5 kWh (1 battery) — ₱135,000</option>
+                    <option value="10" selected>10 kWh (2 batteries) — ₱224,000</option>
+                    <option value="15">15 kWh (3 batteries) — ₱313,000</option>
+                    <option value="20">20 kWh (4 batteries) — ₱412,000</option>
+                    <option value="25">25 kWh (5 batteries) — ₱501,000</option>
+                    <option value="30">30 kWh (6 batteries) — ₱590,000</option>
+                    <option value="35">35 kWh (7 batteries) — ₱689,000</option>
+                    <option value="40">40 kWh (8 batteries) — ₱778,000</option>
                 </select>
             </div>
             <div id="batteryHint" class="hint"></div>
@@ -399,17 +393,17 @@
 
         <!-- Add-Ons -->
         <div class="card">
-            <div class="card-title"><span class="icon">🔧</span> Add-Ons & Location</div>
+            <div class="card-title">Add-Ons & Location</div>
             <div class="toggle-row">
-                <label>Net Metering:</label>
+                <label>Net Metering — ₱39,000:</label>
                 <label class="switch"><input type="checkbox" id="netMetering" checked onchange="recalculate()"><span class="slider"></span></label>
             </div>
             <div class="toggle-row">
-                <label>CFEI & Permits:</label>
+                <label>CFEI & Permits — ₱39,000:</label>
                 <label class="switch"><input type="checkbox" id="cfeiPermits" checked onchange="recalculate()"><span class="slider"></span></label>
             </div>
             <div class="toggle-row">
-                <label>Rapid Shutdown Device (RSD):</label>
+                <label>RSD — <span id="rsdPriceLabel">₱79,000</span>:</label>
                 <label class="switch"><input type="checkbox" id="rsd" checked onchange="recalculate()"><span class="slider"></span></label>
             </div>
             <div id="cfeiWarning" class="hint" style="display:none;">CFEI & RSD generally required with Net Metering.</div>
@@ -417,7 +411,7 @@
             <div class="form-row">
                 <label>Roof Type:</label>
                 <select id="roofType" onchange="recalculate()">
-                    <option value="2" selected>Standard</option>
+                    <option value="2" selected>Metal</option>
                     <option value="1">Asphalt, Shingles or Tiled</option>
                     <option value="3">Concrete Roof</option>
                 </select>
@@ -449,7 +443,7 @@
 
         <!-- Payment Terms -->
         <div class="card">
-            <div class="card-title"><span class="icon">💳</span> Payment Terms</div>
+            <div class="card-title">Payment Terms</div>
             <div class="form-row">
                 <label>Payment Term:</label>
                 <select id="paymentTerm" onchange="recalculate()">
@@ -508,7 +502,7 @@
 
         <!-- Consumption Summary -->
         <div class="card">
-            <div class="card-title"><span class="icon">📊</span> Consumption Summary</div>
+            <div class="card-title">Consumption Summary</div>
             <div class="consumption-bar">
                 <div class="day" id="dayBar" style="width:49%"></div>
                 <div class="night" id="nightBar" style="width:51%"></div>
@@ -528,7 +522,7 @@
 
         <!-- Pricing Breakdown -->
         <div class="card">
-            <div class="card-title"><span class="icon">💰</span> Pricing Breakdown</div>
+            <div class="card-title">Pricing Breakdown</div>
             <div class="pricing-breakdown">
                 <div class="pricing-row"><span>Solar Package (SpotCash)</span><span id="priceSolar">₱497,000</span></div>
                 <div class="pricing-row"><span>Batteries</span><span id="priceBattery">₱224,000</span></div>
@@ -553,7 +547,7 @@
 
         <!-- ROI & Performance -->
         <div class="card">
-            <div class="card-title"><span class="icon">📈</span> Investment Performance</div>
+            <div class="card-title">Investment Performance</div>
             <div class="two-col">
                 <div class="big-result" style="padding:0.75rem;">
                     <div class="label">Payback Period</div>
@@ -572,7 +566,7 @@
 
         <!-- Chart -->
         <div class="card">
-            <div class="card-title"><span class="icon">📉</span> Savings minus Monthly Payments (5 Years)</div>
+            <div class="card-title">Savings vs. Monthly Payments (5 Years)</div>
             <div class="chart-container">
                 <canvas id="savingsChart"></canvas>
             </div>
@@ -590,7 +584,7 @@
 </div>
 
 <div class="footer">
-    SOLVIVA Energy — Solar Payment Calculator v5.7 Web Edition
+    © SOLVIVA Energy. All figures are estimates for illustrative purposes.
 </div>
 
 <script>
@@ -1283,6 +1277,11 @@ function recalculate() {
     document.getElementById('priceNetMetering').textContent = formatCurrency(netMeterSpot);
     document.getElementById('priceCfei').textContent = formatCurrency(cfeiSpot);
     document.getElementById('priceRsd').textContent = formatCurrency(rsdSpot);
+    // Update RSD price label dynamically
+    const rsdLabel = document.getElementById('rsdPriceLabel');
+    if (rsdLabel) {
+        rsdLabel.textContent = (solarKwp > 0 && RSD_PRICES[solarKwp]) ? formatCurrency(RSD_PRICES[solarKwp].spot) : '₱0';
+    }
 
     const showDc = dcCableSpot > 0;
     document.getElementById('priceDcRow').style.display = showDc ? '' : 'none';
